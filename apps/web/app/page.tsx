@@ -4,9 +4,9 @@ import { useSocket } from "../context/SocketProvicer";
 import classes from "./page.module.css";
 
 export default function Page() {
-  const { sendMessage } = useSocket();
+  const { sendMessage, messages } = useSocket();
   const [message, setMessage] = useState("");
-  const messages = ["Hello", "World", "This is a chat app!"];
+
 
 
 
@@ -14,11 +14,15 @@ export default function Page() {
     <div className={classes.container}>
       <div className={classes["chat-box"]}>
         <ul className={classes.messages}>
-          {messages.map((msg, idx) => (
-            <li key={idx} className={classes["message-item"]}>
-              {msg}
-            </li>
-          ))}
+          {messages && messages.length > 0 ? (
+            messages.map((msg, idx) => (
+              <li key={idx} className={classes["message-item"]}>
+                {msg}
+              </li>
+            ))
+          ) : (
+            <li className={classes["message-item"]}>No messages yet</li>
+          )}
         </ul>
         <div className={classes["input-row"]}>
           <input
